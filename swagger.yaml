@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: taskapi
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:5000/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/registeruserrequest'
+              - example:
+                  name: Sorabh
+                  email: sorabh123@gmail.com
+                  password: Sorabh18
+            example:
+              name: Sorabh
+              email: sorabh123@gmail.com
+              password: Sorabh18
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/loginuserrequest'
+              - example:
+                  email: sorabh123@gmail.com
+                  password: Sorabh18
+            example:
+              email: sorabh123@gmail.com
+              password: Sorabh18
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /tasks:
+    get:
+      tags:
+      - Tasks
+      summary: Get all tasks of a user
+      operationId: Getalltasksofauser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Tasks
+      summary: Create task
+      operationId: Createtask
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreatetaskRequest'
+              - example:
+                  taskname: call for warranty
+                  status: pending
+            example:
+              taskname: call for warranty
+              status: pending
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /tasks/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The task ID
+    get:
+      tags:
+      - Tasks
+      summary: Get task by id
+      operationId: Gettaskbyid
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    patch:
+      tags:
+      - Tasks
+      summary: Update task
+      operationId: Updatetask
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdatetaskRequest'
+              - example:
+                  taskname: call for warranty
+                  status: completed
+            example:
+              taskname: call for warranty
+              status: completed
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Tasks
+      summary: Delete task
+      operationId: Deletetask
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    registeruserrequest:
+      title: registeruserrequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Sorabh
+        email: sorabh123@gmail.com
+        password: Sorabh18
+    loginuserrequest:
+      title: loginuserrequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: sorabh123@gmail.com
+        password: Sorabh18
+    CreatetaskRequest:
+      title: CreatetaskRequest
+      required:
+      - taskname
+      - status
+      type: object
+      properties:
+        taskname:
+          type: string
+        status:
+          type: string
+      example:
+        taskname: call for warranty
+        status: pending
+    UpdatetaskRequest:
+      title: UpdatetaskRequest
+      required:
+      - taskname
+      - status
+      type: object
+      properties:
+        taskname:
+          type: string
+        status:
+          type: string
+      example:
+        taskname: call for warranty
+        status: completed
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+  description: ''
+- name: Tasks
+  description: ''
